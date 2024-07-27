@@ -6,7 +6,6 @@ document.addEventListener('DOMContentLoaded', () => {
   const partnersInfoContainer = document.getElementById('partnersInfo')
   const backButton = document.getElementById('backButton')
 
-  // Carregar dados salvos do localStorage
   function loadSavedData() {
     const savedData = localStorage.getItem('companyData')
     if (savedData) {
@@ -18,7 +17,8 @@ document.addEventListener('DOMContentLoaded', () => {
 
   loadSavedData()
 
-  searchButton.addEventListener('click', () => {
+  // Function to handle the search logic
+  function performSearch() {
     searchSection.style.display = 'none'
     resultSection.style.display = 'block'
     const cnpj = document.getElementById('cnpj').value.replace(/[^\d]/g, '')
@@ -31,7 +31,7 @@ document.addEventListener('DOMContentLoaded', () => {
         showConfirmButton: false,
         timer: 3000,
       })
-      // Não alterar o localStorage nem recarregar a página
+    
       resultSection.style.display = 'none'
       searchSection.style.display = 'block'
       return
@@ -56,6 +56,17 @@ document.addEventListener('DOMContentLoaded', () => {
         resultSection.style.display = 'none'
         searchSection.style.display = 'block'
       })
+  }
+
+  // Event listener for the search button click
+  searchButton.addEventListener('click', performSearch)
+
+  // Event listener for Enter key press in the CNPJ input field
+  document.getElementById('cnpj').addEventListener('keydown', (event) => {
+    if (event.key === 'Enter') {
+      event.preventDefault() // Prevent the default action (form submission)
+      performSearch()
+    }
   })
 
   backButton.addEventListener('click', () => {
@@ -228,41 +239,7 @@ document.addEventListener('DOMContentLoaded', () => {
       })
       .join('')
 
-    partnersInfoContainer.innerHTML =
-      partnersHtml +
-      `
-      <button id="savePartnersButton" class="btn btn-success save-button">Salvar Alterações</button>
-    `
-
-    document
-      .getElementById('savePartnersButton')
-      .addEventListener('click', () => {
-        const partnersData = getPartnersInfo()
-        const savedData = localStorage.getItem('companyData')
-        const existingData = savedData
-          ? JSON.parse(savedData)
-          : { company: {}, partners: [] }
-        localStorage.setItem(
-          'companyData',
-          JSON.stringify({
-            company: existingData.company,
-            partners: partnersData,
-          })
-        )
-        Swal.fire({
-          icon: 'success',
-          title: 'Salvo com Sucesso!',
-          text: 'Informações do(s) sócio(s) salvas com sucesso!',
-          showConfirmButton: false,
-          timer: 3000,
-        })
-      })
-  }
-
-  function formatDate(date) {
-    if (!date) return ''
-    const [year, month, day] = date.split('-')
-    return `${day || ''}/${month || ''}/${year || ''}`
+    partnersInfoContainer.innerHTML = partnersHtml
   }
 
   function getCompanyInfo() {
@@ -270,10 +247,8 @@ document.addEventListener('DOMContentLoaded', () => {
       nome: document.getElementById('nome').value,
       razao_social: document.getElementById('razaoSocial').value,
       data_inicio_atividade: document.getElementById('dataAbertura').value,
-      descricao_situacao_cadastral:
-        document.getElementById('situacaoCadastral').value,
-      cnae_fiscal_descricao:
-        document.getElementById('atividadePrincipal').value,
+      descricao_situacao_cadastral: document.getElementById('situacaoCadastral').value,
+      cnae_fiscal_descricao: document.getElementById('atividadePrincipal').value,
       logradouro: document.getElementById('logradouro').value,
       numero: document.getElementById('numero').value,
       bairro: document.getElementById('bairro').value,
@@ -285,19 +260,11 @@ document.addEventListener('DOMContentLoaded', () => {
     }
   }
 
-  function getPartnersInfo() {
-    return Array.from(
-      document.querySelectorAll('.card.shadow.bg-body.rounded')
-    ).map((card, index) => {
-      return {
-        nome_socio: card.querySelector(`#nomeSocio-${index}`).value,
-        cnpj_cpf_do_socio: card.querySelector(`#cnpjCpfSocio-${index}`).value,
-        qualificacao_socio: card.querySelector(`#qualificacaoSocio-${index}`)
-          .value,
-        data_entrada_sociedade: card.querySelector(
-          `#dataEntradaSociedade-${index}`
-        ).value,
-      }
-    })
+  function formatDate(dateString) {
+    if (!dateString) return ''
+    const date = new Date(dateString)
+    return `${date.getDate().toString().padStart(2, '0')}/${(date.getMonth() + 1)
+      .toString()
+      .padStart(2, '0')}/${date.getFullYear()}`
   }
 })
