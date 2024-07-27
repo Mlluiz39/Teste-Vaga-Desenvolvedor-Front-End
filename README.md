@@ -5,9 +5,10 @@
    ```bash
    git clone https://github.com/Mlluiz39/Teste-Vaga-Desenvolvedor-Front-End
 
-## Abrir o Arquivo HTML
+## Abrir o Arquivo HTML / projeto
 
 Navegue até o diretório do projeto e abra o arquivo `index.html` em um navegador.
+Ou acesse a URL `https://cnpj-website-test.netlify.app/`
 
 ## Utilização
 
