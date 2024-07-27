@@ -74,7 +74,7 @@ document.addEventListener('DOMContentLoaded', () => {
                   <div class="form-group">
                       <label class="fw-bolder">Data de Abertura:</label>
                       <input type="text" value="${
-                        data.inicio_atividade || 'Não disponível'
+                        data.data_inicio_atividade || 'Não disponível'
                       }" class="form-control text-center">
                   </div>
                   <div class="form-group">
@@ -86,10 +86,9 @@ document.addEventListener('DOMContentLoaded', () => {
                   <div class="form-group">
                         <label class="fw-bolder">Atividade Principal:</label>
                         <input type="text" value="${
-                          data.atividade_principal &&
-                          data.atividade_principal.length > 0
-                            ? data.atividade_principal[0].text
-                            : 'Não disponível'
+                          
+                            data.cnae_fiscal_descricao
+                          || 'Não disponível'
                         }" class="form-control text-center">
                     </div>
                   <div class="form-group">
@@ -152,10 +151,5 @@ document.addEventListener('DOMContentLoaded', () => {
       .join('')
 
     partnersInfoContainer.innerHTML = partnersHtml
-  }
-
-  function formatDate(dateString) {
-    const date = new Date(dateString)
-    return date.toLocaleDateString('pt-BR')
   }
 })
