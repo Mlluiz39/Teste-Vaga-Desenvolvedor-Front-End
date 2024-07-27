@@ -17,7 +17,6 @@ document.addEventListener('DOMContentLoaded', () => {
 
   loadSavedData()
 
-  // Function to handle the search logic
   function performSearch() {
     searchSection.style.display = 'none'
     resultSection.style.display = 'block'
@@ -58,13 +57,11 @@ document.addEventListener('DOMContentLoaded', () => {
       })
   }
 
-  // Event listener for the search button click
   searchButton.addEventListener('click', performSearch)
 
-  // Event listener for Enter key press in the CNPJ input field
   document.getElementById('cnpj').addEventListener('keydown', (event) => {
     if (event.key === 'Enter') {
-      event.preventDefault() // Prevent the default action (form submission)
+      event.preventDefault() 
       performSearch()
     }
   })
