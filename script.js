@@ -85,70 +85,73 @@ document.addEventListener('DOMContentLoaded', () => {
           <div class="form-group">
             <label class="fw-bolder">Nome:</label>
             <input type="text" id="nome" value="${
-              data.nome || ''
+              data.nome || 'Não informado'
             }" class="form-control text-center">
           </div>
           <div class="form-group">
             <label class="fw-bolder">Razão Social:</label>
             <input type="text" id="razaoSocial" value="${
-              data.razao_social || ''
+              data.razao_social || 'Não informado'
             }" class="form-control text-center">
           </div>
           <div class="form-group">
             <label class="fw-bolder">Data de Abertura:</label>
             <input type="text" id="dataAbertura" value="${
-              formatDate(data.data_inicio_atividade) || ''
+              formatDate(data.data_inicio_atividade) || 'Não informado'
             }" class="form-control text-center">
           </div>
           <div class="form-group">
             <label class="fw-bolder">Situação Cadastral:</label>
             <input type="text" id="situacaoCadastral" value="${
-              data.descricao_situacao_cadastral || ''
+              data.descricao_situacao_cadastral || 'Não informado'
             }" class="form-control text-center">
           </div>
           <div class="form-group">
             <label class="fw-bolder">Atividade Principal:</label>
             <input type="text" id="atividadePrincipal" value="${
-              data.cnae_fiscal_descricao || ''
+              data.cnae_fiscal_descricao || 'Não informado'
             }" class="form-control text-center">
           </div>
           <div class="form-group">
             <label class="fw-bolder">Endereço:</label>
             <div class="address-fields">
               <div class="form-group">
-                <label>Logradouro:</label>
                 <input type="text" id="logradouro" value="${
-                  data.logradouro || ''
+                  data.descricao_tipo_de_logradouro
+                  || 'Não informado'
+                }:" class="form-control text-center">
+                <input type="text" id="logradouro" value="${
+                  data.logradouro || 'Não informado'
                 }" class="form-control text-center">
               </div>
               <div class="form-group">
                 <label>Número:</label>
                 <input type="text" id="numero" value="${
-                  data.numero || ''
+                  data.numero || 'Não informado'
                 }" class="form-control text-center">
               </div>
               <div class="form-group">
                 <label>Bairro:</label>
                 <input type="text" id="bairro" value="${
-                  data.bairro || ''
+                  data.bairro || 'Não informado'
                 }" class="form-control text-center">
               </div>
               <div class="form-group">
                 <label>Cidade:</label>
                 <input type="text" id="municipio" value="${
-                  data.municipio || ''
+                  data.municipio || 'Não informado'
                 }" class="form-control text-center">
               </div>
               <div class="form-group">
                 <label>CEP:</label>
                 <input type="text" id="cep" value="${
-                  data.cep || ''
+                  data.cep || 'Não informado'
                 }" class="form-control text-center">
               </div>
               <div class="form-group">
                 <label>Estado:</label>
                 <input type="text" id="uf" value="${
-                  data.uf || ''
+                  data.uf || 'Não informado'
                 }" class="form-control text-center">
               </div>
             </div>
@@ -156,13 +159,13 @@ document.addEventListener('DOMContentLoaded', () => {
           <div class="form-group">
             <label class="fw-bolder">Telefone:</label>
             <input type="text" id="telefone" value="${
-              data.ddd_telefone_1 || ''
+              data.ddd_telefone_1 || 'Não informado'
             }" class="form-control text-center">
           </div>
           <div class="form-group">
             <label class="fw-bolder">E-mail:</label>
             <input type="text" id="email" value="${
-              data.email || ''
+              data.email || 'Não informado'
             }" class="form-control text-center">
           </div>
           <button id="saveCompanyButton" class="btn btn-success save-button">Salvar Alterações</button>
@@ -212,25 +215,25 @@ document.addEventListener('DOMContentLoaded', () => {
             <div class="form-group">
               <label class="fw-bolder">Nome:</label>
               <input type="text" id="nomeSocio-${index}" value="${
-          partner.nome_socio || ''
+          partner.nome_socio || 'Não informado'
         }" class="form-control text-center">
             </div>
             <div class="form-group">
               <label class="fw-bolder">CNPJ / CPF:</label>
               <input type="text" id="cnpjCpfSocio-${index}" value="${
-          partner.cnpj_cpf_do_socio || ''
+          partner.cnpj_cpf_do_socio || 'Não informado'
         }" class="form-control text-center">
             </div>
             <div class="form-group">
               <label class="fw-bolder">Qualificação do Sócio:</label>
               <input type="text" id="qualificacaoSocio-${index}" value="${
-          partner.qualificacao_socio || ''
+          partner.qualificacao_socio || 'Não informado'
         }" class="form-control text-center">
             </div>
             <div class="form-group">
               <label class="fw-bolder">Data de Entrada na Sociedade:</label>
               <input type="text" id="dataEntradaSociedade-${index}" value="${
-          formatDate(partner.data_entrada_sociedade) || ''
+          formatDate(partner.data_entrada_sociedade) || 'Não informado'
         }" class="form-control text-center">
             </div>
           </div>
@@ -239,7 +242,41 @@ document.addEventListener('DOMContentLoaded', () => {
       })
       .join('')
 
-    partnersInfoContainer.innerHTML = partnersHtml
+    partnersInfoContainer.innerHTML = partnersHtml + `
+      <button id="savePartnersButton" class="btn btn-success save-button">Salvar Alterações dos Sócios</button>
+    `
+
+    document
+      .getElementById('savePartnersButton')
+      .addEventListener('click', () => {
+        const partnersData = getPartnersInfo()
+        const savedData = localStorage.getItem('companyData')
+        const existingData = savedData
+          ? JSON.parse(savedData)
+          : { company: {}, partners: [] }
+        localStorage.setItem(
+          'companyData',
+          JSON.stringify({
+            company: existingData.company,
+            partners: partnersData,
+          })
+        )
+        Swal.fire({
+          icon: 'success',
+          title: 'Salvo com Sucesso!',
+          text: 'Informações do(s) sócio(s) salvas com sucesso!',
+          showConfirmButton: false,
+          timer: 3000,
+        })
+      })
+  }
+
+  function formatDate(dateString) {
+    if (!dateString) return ''
+    const date = new Date(dateString)
+    return `${date.getDate().toString().padStart(2, '0')}/${(date.getMonth() + 1)
+      .toString()
+      .padStart(2, '0')}/${date.getFullYear()}`
   }
 
   function getCompanyInfo() {
@@ -260,11 +297,16 @@ document.addEventListener('DOMContentLoaded', () => {
     }
   }
 
-  function formatDate(dateString) {
-    if (!dateString) return ''
-    const date = new Date(dateString)
-    return `${date.getDate().toString().padStart(2, '0')}/${(date.getMonth() + 1)
-      .toString()
-      .padStart(2, '0')}/${date.getFullYear()}`
+  function getPartnersInfo() {
+    return Array.from(
+      document.querySelectorAll('.card.shadow.bg-body.rounded')
+    ).map((card, index) => {
+      return {
+        nome_socio: card.querySelector(`#nomeSocio-${index}`).value,
+        cnpj_cpf_do_socio: card.querySelector(`#cnpjCpfSocio-${index}`).value,
+        qualificacao_socio: card.querySelector(`#qualificacaoSocio-${index}`).value,
+        data_entrada_sociedade: card.querySelector(`#dataEntradaSociedade-${index}`).value,
+      }
+    })
   }
 })
