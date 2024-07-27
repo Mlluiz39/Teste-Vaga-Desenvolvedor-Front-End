@@ -1,12 +1,21 @@
-# Consulta CNPJ com BrasilAPI
+# Instruções de Uso
 
-Este projeto consiste em uma aplicação web simples para consultar informações de empresas pelo CNPJ utilizando a API da [BrasilAPI](https://brasilapi.com.br). A aplicação é composta por uma página de pesquisa que renderiza o resultados, onde os dados da empresa e dos sócios são exibidos.
+1. **Clone o Repositório**:
 
-## Estrutura do Projeto
+   ```bash
+   git clone https://github.com/Mlluiz39/Teste-Vaga-Desenvolvedor-Front-End
 
-- **index.html**: Página principal onde o usuário pode inserir o CNPJ para consulta.
-- **script.js**: Arquivo JavaScript contendo a lógica da aplicação para buscar dados da API e exibir informações.
-- **styles.css**: Arquivo CSS para estilizar a aplicação (opcional, não incluído neste exemplo).
+## Abrir o Arquivo HTML
+
+Navegue até o diretório do projeto e abra o arquivo `index.html` em um navegador.
+
+## Utilização
+
+1. **Insira um CNPJ válido** no campo de pesquisa.
+2. **Clique no botão "Consultar"** para obter as informações da empresa.
+3. As **informações da empresa e dos sócios** serão exibidas abaixo.
+4. Você pode **editar os campos diretamente** e enviar os dados conforme necessário.
+5. **Clique no botão "Voltar"** para retornar à tela de pesquisa.
 
 ## Funcionalidades
 
@@ -30,22 +39,10 @@ Este projeto consiste em uma aplicação web simples para consultar informaçõe
 - Bootstrap (para estilização, opcional)
 - [BrasilAPI](https://brasilapi.com.br) para consulta de CNPJ
 
-## Como Usar
+## Contribuição
 
-1. **Clone o Repositório**:
-   ```bash
-   git clone https://github.com/mlluiz39/Teste-Vaga-Desenvolvedor-Front-End
+Se você deseja contribuir para este projeto, sinta-se à vontade para abrir uma *pull request* ou relatar problemas na seção de *issues* do repositório.
 
-2. **Abra o Arquivo HTML**:
-   ```bash
-   Abra o arquivo index.html no seu navegador, pode usar a extensão do VScode live server
+## Licença
 
-3. **Faça uma consulta**:
-  ```bash
-   Insira um CNPJ válido no campo de entrada e clique no botão "Pesquisar".
-   Os resultados serão exibidos na mesma página.
-
-4. **Volte para Pesquisa**:
-  ```bash
-   Clique no botão "Voltar" para retornar à página de pesquisa e limpar os dados exibidos,
-   e está finalizado o projeto
+Este projeto está licenciado sob a [MIT License](LICENSE).
