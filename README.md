@@ -27,7 +27,11 @@ Navegue até o diretório do projeto e abra o arquivo `index.html` em um navegad
    - Informações da empresa são exibidas em um formato de cartão.
    - Dados dos sócios são exibidos em cartões separados.
 
-3. **Navegação**:
+3. **Salvo no localStorage**
+   - Informações salvas no local storage do navegador.
+   - Recuperação dos dados via local storage.
+
+4. **Navegação**:
    - Após a pesquisa, a aplicação oculta a seção de pesquisa e exibe a seção de resultados.
    - O usuário pode voltar para a página de pesquisa clicando no botão "Voltar", que também limpa o campo de CNPJ e as informações exibidas.
 
